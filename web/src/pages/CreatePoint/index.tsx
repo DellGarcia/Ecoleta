@@ -1,6 +1,8 @@
 import React, { useEffect, useState, ChangeEvent, FormEvent } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
+import Dropzone from '../../components/Dropzone';
+
 import { Map, TileLayer, Marker } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet';
  
@@ -29,6 +31,8 @@ interface IBGECityResponse {
 const CreatePoint = () => {
 
     const history = useHistory();
+
+    const [selectedFile, setSelectedFile] = useState<File>();
 
     const [items, setItems] = useState<Item[]>([]);
     const [selectedItems, setSelectedItems] = useState<number[]>([]);
@@ -129,16 +133,20 @@ const CreatePoint = () => {
         const [ latitude, longitude ] = selectedPosition;
         const items = selectedItems;
 
-        const data = {
-            name,
-            email,
-            whatsapp,
-            uf,
-            city,
-            latitude,
-            longitude,
-            items
-        };
+        const data = new FormData();
+
+        data.append('name', name);
+        data.append('email', email);
+        data.append('whatsapp', whatsapp);
+        data.append('uf', uf);
+        data.append('city', city);
+        data.append('latitude', String(latitude));
+        data.append('longitude', String(longitude));
+        data.append('items', items.join(','));
+        
+        if(selectedFile)
+            data.append('image', selectedFile);
+
 
         await api.post('points', data);
 
@@ -158,8 +166,11 @@ const CreatePoint = () => {
                 </Link>
             </header>
 
+
             <form onSubmit={handleSubmit}>
                 <h1>Cadastro do ponto de coleta</h1>
+
+                <Dropzone onFileUploaded={setSelectedFile} />
 
                 <fieldset>
                     <legend>
