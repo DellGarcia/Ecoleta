@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import knexConnection from '../database/connection';
+import getEthernetIp from '../utils/EthernetIp';
 
 class ItemsController {
     async index(request: Request, response: Response) {
@@ -9,7 +10,7 @@ class ItemsController {
             return {
                 id: item.id,
                 title: item.title,
-                image_url: `http://192.168.100.7:3333/uploads/${item.image}`,
+                image_url: `http://${getEthernetIp()}:3333/uploads/${item.image}`,
             };
         })
     
