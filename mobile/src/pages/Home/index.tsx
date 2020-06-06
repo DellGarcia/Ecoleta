@@ -83,12 +83,14 @@ const Home = () => {
 
                 <View style={styles.footer}>
                     <RNPickerSelect 
+                        placeholder={{label: "Selecione a UF"}}
                         onValueChange={setSelectedUf}
                         items={ufs}
                         style={pickerSelectStyles}
                     />
 
                     <RNPickerSelect 
+                        placeholder={{label: "Selecione a Cidade"}}
                         onValueChange={setSelectedCity}
                         items={cities}
                         style={pickerSelectStyles}
