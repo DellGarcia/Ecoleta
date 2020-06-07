@@ -22,7 +22,10 @@
 
 <p align="center">
    Ele visa conectar empresas e organizações que recolhem resíduos, com as pessoas que desejam descartar esses resíduos.<br>
-   Evitando assim o descarte incorreto dos resíduos! 
+   Evitando assim o descarte incorreto dos resíduos! <br>
+   <br>
+   
+   <img src="screens/capa.png" alt="Capa da aplicacão" width="600px">
 </p>   
 
 ## :sparkles: Tecnologias
