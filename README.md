@@ -21,7 +21,8 @@
 <h3 align="center">O Ecoleta é um sistema para contribuir com o meio ambiente</h3>
 
 <p align="center">
-   Ele visa conectar empresas e organizações que recolhem resíduos, com as pessoas que desejam descartar esses resíduos.<br>
+   Ele visa conectar empresas e organizações que recolhem resíduos, <br>
+   com as pessoas que desejam descartar esses resíduos.<br>
    Evitando assim o descarte incorreto dos resíduos! <br>
    <br>
    
