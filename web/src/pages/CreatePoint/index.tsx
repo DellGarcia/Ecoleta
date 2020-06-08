@@ -2,6 +2,8 @@ import React, { useEffect, useState, ChangeEvent, FormEvent } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
 import Dropzone from '../../components/Dropzone';
+import Contact from '../../components/Contact';
+import ItemsList from '../../components/ItemsList';
 
 import { Map, TileLayer, Marker } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet';
@@ -13,12 +15,6 @@ import logo from '../../assets/logo.svg';
 import { FiArrowLeft } from 'react-icons/fi';
 
 import './styles.css';
-
-interface Item {
-    id: number;
-    title: string;
-    image_url: string;
-}
 
 interface IBGEUFResponse {
     sigla: string
@@ -34,9 +30,8 @@ const CreatePoint = () => {
 
     const [selectedFile, setSelectedFile] = useState<File>();
 
-    const [items, setItems] = useState<Item[]>([]);
     const [selectedItems, setSelectedItems] = useState<number[]>([]);
-    
+
     const [ufs, setUfs] = useState<string[]>([]);
     const [cities, setCities] = useState<string[]>([]);
 
@@ -59,12 +54,6 @@ const CreatePoint = () => {
         });
 
     }, [])
-
-    useEffect(() => {
-        api.get('items').then(response => {
-            setItems(response.data);
-        })
-    }, []);
 
     useEffect(() => {
         axios.get<IBGEUFResponse[]>("https://servicodados.ibge.gov.br/api/v1/localidades/estados")
@@ -105,23 +94,10 @@ const CreatePoint = () => {
         setSelectedPosition([lat, lng]);
     }
 
-    function handleInputChance(event: ChangeEvent<HTMLInputElement>) {
+    function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
         const { name, value } = event.target;
 
         setFormData({...formData, [name]: value});
-    }
-
-    function handleSelectItem(id: number) {
-        const alreadySelected = selectedItems.findIndex(item => item === id);
-
-        if(alreadySelected >= 0) {
-            const filtereditems = selectedItems.filter(item => item !== id);
-
-            setSelectedItems(filtereditems);
-        } else {
-            setSelectedItems([...selectedItems, id]);
-        }
-        
     }
 
     async function handleSubmit(event: FormEvent) {
@@ -166,48 +142,12 @@ const CreatePoint = () => {
                 </Link>
             </header>
 
-
             <form onSubmit={handleSubmit}>
                 <h1>Cadastro do ponto de coleta</h1>
 
                 <Dropzone onFileUploaded={setSelectedFile} />
 
-                <fieldset>
-                    <legend>
-                        <h2>Dados</h2>
-                    </legend>
-
-                    <div className="field">
-                        <label htmlFor="name">Nome da entidade</label>
-                        <input 
-                            type="text" 
-                            name="name" 
-                            id="name" 
-                            onChange={handleInputChance}
-                        />
-                    </div>
-
-                    <div className="field-group">
-                        <div className="field">
-                            <label htmlFor="email">Email</label>
-                            <input 
-                                type="text" 
-                                name="email" 
-                                id="email" 
-                                onChange={handleInputChance} 
-                            />
-                        </div>
-                        <div className="field">
-                            <label htmlFor="whatsapp">Whatsapp</label>
-                            <input 
-                                type="text" 
-                                name="whatsapp" 
-                                id="whatsapp" 
-                                onChange={handleInputChance}
-                            />
-                        </div>
-                    </div>
-                </fieldset>
+                <Contact onTextChange={handleInputChange}/>
 
                 <fieldset>
                     <legend>
@@ -256,24 +196,7 @@ const CreatePoint = () => {
                     </div>
                 </fieldset>
 
-                <fieldset>
-                    <legend>
-                        <h2>items de coleta</h2>
-                        <span>Selecione um ou mais items abaixo</span>
-                    </legend>
-
-                    <ul className="items-grid">
-                        {items.map(item => (
-                            <li key={item.id} 
-                                onClick={() => handleSelectItem(item.id)}
-                                className={selectedItems.includes(item.id) ? 'selected' : ''}
-                            >
-                                <img src={item.image_url} alt={item.title}/>
-                                <span>{item.title}</span>
-                            </li>
-                        ))}
-                    </ul>
-                </fieldset>
+                <ItemsList selectedItems={selectedItems} setSelectedItems={setSelectedItems}/>
 
                 <button type="submit">Cadastrar ponto de coleta</button>
             </form>
