@@ -7,7 +7,7 @@
   
   <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/dellgarcia/ecoleta.svg">
   
-  <a src="https://app.codacy.com/manual/DellGarcia/Ecoleta?utm_source=github.com&utm_medium=referral&utm_content=DellGarcia/Ecoleta&utm_campaign=Badge_Grade_Dashboard">
+  <a src="https://app.codacy.com/manual/DellGarcia/Game-platform?utm_source=github.com&utm_medium=referral&utm_content=DellGarcia/Ecoleta&utm_campaign=Badge_Grade_Dashboard">
     <img src="https://api.codacy.com/project/badge/Grade/8928dde494b042268f5030bdfef637e4" alt="Codacy grade"/>
   </a>
   
